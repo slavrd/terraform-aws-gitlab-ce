@@ -1,0 +1,21 @@
+#/usr/bin/env bash
+# Installs GitLab CE
+
+export GITLAB_VER_STRING=${ gitlab_version_string }
+
+apt-get update
+apt-get install -y curl openssh-server ca-certificates gnupg apt-transport-https
+
+curl -L https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey | sudo apt-key add -
+
+cat <<EOT >/etc/apt/sources.list.d/gitlab_gitlab-ce.list
+deb https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ $(awk 'BEGIN { FS = "="}; /^UBUNTU_CODENAME/ {print $2}' /etc/os-release) main
+deb-src https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ $(awk 'BEGIN { FS = "="}; /^UBUNTU_CODENAME/ {print $2}' /etc/os-release) main
+EOT
+
+apt-get update
+if [ -z "$GITLAB_VER_STRING" ]; then
+    apt-get install -y gitlab-ce
+else
+    apt-get install -y gitlab-ce=$${GITLAB_VER_STRING}
+fi
