@@ -36,6 +36,12 @@ variable "ingress_cidrs_ssh" {
   default     = ["0.0.0.0/0"]
 }
 
+variable "eip_allocation_id" {
+  description = "The Id of a preexisting Elastic IP Allocation to associte with the GitLab instance netowrk interface."
+  type        = string
+  default     = ""
+}
+
 # EC2 instance
 
 variable "ami_id" {
