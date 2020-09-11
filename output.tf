@@ -12,3 +12,8 @@ output "instance_public_dns" {
   description = ""
   value       = try(data.aws_eip.external_eip[0].public_dns, aws_instance.gitlab.public_dns)
 }
+
+output "gitlab_url" {
+  description = ""
+  value       = coalesce(var.gitlab_url, "http://${try(data.aws_eip.external_eip[0].public_dns, aws_instance.gitlab.public_dns)}")
+}
