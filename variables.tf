@@ -84,15 +84,16 @@ variable "gitlab_url" {
   description = "The full url of the GitLab instance. Must include the prtocol schema e.i. https:// or http://"
   type        = string
   validation {
-    condition     = can(regex("^http(s)*://.*$", var.gitlab_url))
+    condition     = var.gitlab_url == "" || can(regex("^http(s)*://.*$", var.gitlab_url))
     error_message = "The 'gitlab_url' value must statrt with the protocol scheme e.i. https:// or http:// ."
   }
+  default = ""
 }
 
 variable "gitlab_letsencrypt_enable" {
   description = "Whether to enable letsencrypt to auto genereate SSL certificates."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "gitlab_version_string" {
