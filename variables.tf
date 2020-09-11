@@ -37,7 +37,7 @@ variable "ingress_cidrs_ssh" {
 }
 
 variable "eip_allocation_id" {
-  description = "The Id of a preexisting Elastic IP Allocation to associte with the GitLab instance netowrk interface."
+  description = "The Id of a preexisting Elastic IP Allocation to associte with the GitLab instance network interface."
   type        = string
   default     = ""
 }
@@ -72,12 +72,6 @@ variable "root_block_device_size" {
   default     = 50
 }
 
-variable "eip_id" {
-  description = "Id of an elastic IP to associate with the EC2 instance primary interface."
-  type        = string
-  default     = null
-}
-
 # GitLab
 
 variable "gitlab_url" {
@@ -85,7 +79,7 @@ variable "gitlab_url" {
   type        = string
   validation {
     condition     = var.gitlab_url == "" || can(regex("^http(s)*://.*$", var.gitlab_url))
-    error_message = "The 'gitlab_url' value must statrt with the protocol scheme e.i. https:// or http:// ."
+    error_message = "The 'gitlab_url' value must statrt with the protocol scheme e.i. https:// or http:// . If no URL is provided the EC2 instance url will be used."
   }
   default = ""
 }
@@ -97,7 +91,7 @@ variable "gitlab_letsencrypt_enable" {
 }
 
 variable "gitlab_version_string" {
-  description = "GitLab version string for use with APT repository."
+  description = "GitLab version string for use with APT repository. If no string is provided will install the latest version."
   type        = string
   default     = ""
 }
