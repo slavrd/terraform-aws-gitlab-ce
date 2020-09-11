@@ -1,5 +1,5 @@
 module "gitlab-basic" {
-  source = "../../"
+  source = "git::https://github.com/slavrd/terraform-aws-gitlab-ce.git"
 
   # change values to match your infrastructure
   name_prefix = "my-gitlab-"
