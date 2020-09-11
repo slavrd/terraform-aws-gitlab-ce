@@ -4,6 +4,10 @@ A terraform module to manage a basic GitLab installation in AWS.
 
 The main goal is to enable quick provisioning of a GitLab installation to use for testing.
 
+Upon first installation the GitLab instance will have default user `root` with password `5iveL!fe`.
+
+Depending on the version of GitLab installed you may be asked to first change the password before being able to login for the first time.
+
 ## Requirements
 
 * Terraform CLI version `~> 0.13.0`
@@ -47,6 +51,8 @@ The module outputs are defined in the `output.tf` file. They are described in th
 Some of the known caveats when using the module
 
 * The EC2 instance interface association with an user provided Elastic IP is conditional. It will be created only if the user provides the Elastic IP allocation id via the `eip_allocation_id` input variable. Because of this the Elastic IP allocation id must be known before the  apply phase. If the Elastic IP is managed in the same terraform workspace you might need to first run `terraform apply` with the `-target` option so that the Elastic IP can be created before provisioning the Gitlab module.
+
+* After the Terraform run finishes it will take some time (around 10 mins.) for the GitLab application to actually be available on the output URL. Terraform is not aware of the user data script that are run on the EC2 instance to perform the GitLab installation.
 
 ## Examples
 
