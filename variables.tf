@@ -20,7 +20,7 @@ variable "vpc_id" {
 }
 
 variable "subnet_id" {
-  description = "The subnet in which to deploy the resoruces."
+  description = "The subnet in which to deploy the resources."
   type        = string
 }
 
@@ -75,7 +75,7 @@ variable "root_block_device_size" {
 # GitLab
 
 variable "gitlab_url" {
-  description = "The full url of the GitLab instance. Must include the prtocol schema e.i. https:// or http://"
+  description = "The full url of the GitLab instance. Must include the protocol schema e.i. https:// or http://"
   type        = string
   validation {
     condition     = var.gitlab_url == "" || can(regex("^http(s)*://.*$", var.gitlab_url))
