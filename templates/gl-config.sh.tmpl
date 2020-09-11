@@ -1,0 +1,13 @@
+#/usr/bin/env bash
+# Configure GitLab CE
+
+GITLAB_URL=${ gitlab_url }
+LETSENCRYPT_ENABLE=${ letsencryt_enable }
+
+if [ -n "$GITLAB_URL" ]; then
+  sed -i.bak "s|^#* *external_url.*|external_url '$GITLAB_URL'|" /etc/gitlab/gitlab.rb
+fi
+
+sed -i.bak "s/^#* *letsencrypt\['enable'\] =.*/letsencrypt\['enable'\] = $LETSENCRYPT_ENABLE/" /etc/gitlab/gitlab.rb
+
+gitlab-ctl reconfigure

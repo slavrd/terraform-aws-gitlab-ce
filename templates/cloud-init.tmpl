@@ -1,0 +1,15 @@
+#cloud-config
+write_files:
+-   encoding: gz+b64
+    content: ${ gl_install_gzb64content }
+    owner: root:root
+    path: /opt/gl-install/gl-install.sh
+    permissions: '0655'
+-   encoding: gz+b64
+    content: ${ gl_config_gzb64content }
+    owner: root:root
+    path: /opt/gl-install/gl-config.sh
+    permissions: '0655'
+runcmd:
+- [ "/bin/bash", "/opt/gl-install/gl-install.sh" ]
+- [ "/bin/bash", "/opt/gl-install/gl-config.sh" ]
