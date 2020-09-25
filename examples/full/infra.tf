@@ -1,5 +1,5 @@
 module "gl_network" {
-  source = "git::https://github.com/slavrd/terraform-aws-basic-network.git?ref=0.4.0"
+  source = "git::https://github.com/slavrd/terraform-aws-basic-network.git?ref=0.4.1"
 
   vpc_cidr_block      = var.vpc_cidr_block
   public_subnet_cidrs = [var.public_subnet_cidr]
@@ -13,8 +13,8 @@ resource "aws_eip" "gl_public" {
 }
 
 resource "aws_eip_association" "gl_public" {
-  network_interface_id = module.gitlab.instance_interface_id
-  allocation_id        = aws_eip.gl_public.id
+  instance_id   = module.gitlab.instance_id
+  allocation_id = aws_eip.gl_public.id
 }
 
 locals {

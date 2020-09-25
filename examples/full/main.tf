@@ -5,7 +5,7 @@ module "gitlab" {
   name_prefix                 = var.name_prefix
   vpc_id                      = module.gl_network.vpc_id
   subnet_id                   = module.gl_network.public_subnet_ids[0]
-  associate_public_ip_address = false
+  associate_public_ip_address = true
   ami_id                      = var.ami_id
   key_name                    = var.key_name
   gitlab_url                  = var.gitlab_url
