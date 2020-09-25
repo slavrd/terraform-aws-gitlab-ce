@@ -1,5 +1,5 @@
 module "gitlab" {
-  source = "git::https://github.com/slavrd/terraform-aws-gitlab-ce.git?ref=v0.1.0"
+  source = "git::https://github.com/slavrd/terraform-aws-gitlab-ce.git"
 
   # change values to match your infrastructure
   name_prefix               = var.name_prefix
@@ -10,7 +10,7 @@ module "gitlab" {
   eip_allocation_id         = aws_eip.gl_public.id
   gitlab_url                = var.gitlab_url
   gitlab_letsencrypt_enable = var.gitlab_letsencrypt_enable
-  gitlab_version_string     = var.gitlab_version_string
+  gitlab_version            = var.gitlab_version
 
   common_tags = var.common_tags
 

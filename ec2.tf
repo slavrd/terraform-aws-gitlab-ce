@@ -14,7 +14,7 @@ resource "aws_instance" "gitlab" {
 
   user_data_base64 = base64encode(templatefile("${path.module}/templates/cloud-init.tmpl", {
     gl_install_gzb64content = base64gzip(templatefile("${path.module}/templates/gl-install.sh.tmpl", {
-      gitlab_version_string = var.gitlab_version_string
+      gitlab_version = replace(var.gitlab_version, ".", "\\.")
     }))
     gl_config_gzb64content = base64gzip(templatefile("${path.module}/templates/gl-config.sh.tmpl", {
       gitlab_url        = var.gitlab_url
