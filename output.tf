@@ -5,15 +5,25 @@ output "instance_private_ip" {
 
 output "instance_public_ip" {
   description = "The public IP of the EC2 instance."
-  value       = try(data.aws_eip.external_eip[0].public_ip, aws_instance.gitlab.public_ip)
+  value       = aws_instance.gitlab.public_ip
+}
+
+output "instance_id" {
+  description = "The Id of the GitLab isntance."
+  value       = aws_instance.gitlab.id
+}
+
+output "instance_interface_id" {
+  description = "The Id of the GitLab isntance network interface."
+  value       = aws_instance.gitlab.primary_network_interface_id
 }
 
 output "instance_public_dns" {
   description = "The public DNS of the EC2 instance."
-  value       = try(data.aws_eip.external_eip[0].public_dns, aws_instance.gitlab.public_dns)
+  value       = aws_instance.gitlab.public_dns
 }
 
 output "gitlab_url" {
   description = "The URL of the GitLab instance."
-  value       = coalesce(var.gitlab_url, "http://${try(data.aws_eip.external_eip[0].public_dns, aws_instance.gitlab.public_dns, aws_instance.gitlab.private_dns)}")
+  value       = coalesce(var.gitlab_url, "http://${coalesce(aws_instance.gitlab.public_dns, aws_instance.gitlab.private_dns)}")
 }
