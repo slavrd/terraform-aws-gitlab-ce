@@ -12,4 +12,4 @@ ami_id                    = "ami-0c960b947cbb2dd16"
 key_name                  = "my-aws-key-pair-name"
 gitlab_url                = "https://gl.example.com"
 gitlab_letsencrypt_enable = true
-gitlab_version_string     = ""
+gitlab_version            = ""

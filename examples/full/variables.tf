@@ -57,8 +57,8 @@ variable "gitlab_letsencrypt_enable" {
   default     = false
 }
 
-variable "gitlab_version_string" {
-  description = "GitLab version string for use with APT repository."
+variable "gitlab_version" {
+  description = "GitLab version to install. If the provided string matches several versions the latest one will be isntalled. If the string does not match any version - the latest GitLab version will be installed."
   type        = string
   default     = ""
 }
