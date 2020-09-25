@@ -9,12 +9,12 @@ output "instance_public_ip" {
 }
 
 output "instance_id" {
-  description = "The Id of the GitLab isntance."
+  description = "The Id of the GitLab instance."
   value       = aws_instance.gitlab.id
 }
 
 output "instance_interface_id" {
-  description = "The Id of the GitLab isntance network interface."
+  description = "The Id of the GitLab instance network interface."
   value       = aws_instance.gitlab.primary_network_interface_id
 }
 

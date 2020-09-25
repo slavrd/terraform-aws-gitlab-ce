@@ -25,7 +25,6 @@ The module's input variables are defined in the `variables.tf` file. They are de
 | subnet_id | `string` || The subnet in which to deploy the resources. |
 | ingress_cidrs_http | `list(string)` | `["0.0.0.0/0"]` | List of CIDRs to allow http traffic from. |
 | ingress_cidrs_ssh | `list(string)` | `["0.0.0.0/0"]` | List of CIDRs to allow ssh traffic from. |
-| eip_allocation_id | `string` | `""` | The Id of a preexisting Elastic IP Allocation to associate with the GitLab instance network interface. |
 | ami_id | `string` || The Id of an Ubuntu ami. |
 | instance_type | `string` | `"t2.medium"` | The type of the EC2 instance. |
 | key_name | `string` || The name of the AWS key pair to use. |
@@ -33,7 +32,7 @@ The module's input variables are defined in the `variables.tf` file. They are de
 | root_block_device_size | `number` | `50` | he size of the root block device of the EC2 instance. |
 | gitlab_url | `string` | `""` | The full url of the GitLab instance. Must include the protocol schema e.i. https:// or http://". If no URL is provided the EC2 instance url will be used. |
 | gitlab_letsencrypt_enable | `bool` | `false` | Whether to enable let's encrypt to auto generate SSL certificates. |
-| gitlab_version_string | `string` | `""` | GitLab version string for use with APT repository. If no string is provided will install the latest version. |
+| gitlab_version | `string` | `""` | GitLab version to install. If the provided string matches several versions the latest one will be installed. If the string does not match any version - the latest GitLab version will be installed. |
 
 ## Outputs
 
@@ -45,12 +44,12 @@ The module outputs are defined in the `output.tf` file. They are described in th
 | instance_public_ip | `string` | The public IP of the EC2 instance. |
 | instance_public_dns | `string` | The public DNS of the EC2 instance. | 
 | instance_private_ip | `string` | The private IP of the EC2 instance. |
+| instance_id | `string` | The Id of the GitLab instance. |
+| instance_interface_id | `string` | The Id of the GitLab instance network interface. |
 
 ## Caveats
 
 Some of the known caveats when using the module
-
-* The EC2 instance interface association with an user provided Elastic IP is conditional. It will be created only if the user provides the Elastic IP allocation id via the `eip_allocation_id` input variable. Because of this the Elastic IP allocation id must be known before the  apply phase. If the Elastic IP is managed in the same terraform workspace you might need to first run `terraform apply` with the `-target` option so that the Elastic IP can be created before provisioning the Gitlab module.
 
 * After the Terraform run finishes it will take some time (around 10 mins.) for the GitLab application to actually be available on the output URL. Terraform is not aware of the user data script that are run on the EC2 instance to perform the GitLab installation.
 
