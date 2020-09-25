@@ -1,7 +1,8 @@
 #/usr/bin/env bash
 # Installs GitLab CE
 
-export GITLAB_VER_STRING=${ gitlab_version_string }
+export GITLAB_VER_STRING=""
+export GITLAB_VER_REGEX=${ gitlab_version }
 
 apt-get update
 apt-get install -y curl openssh-server ca-certificates gnupg apt-transport-https
@@ -14,6 +15,12 @@ deb-src https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ $(awk 'BEGIN { FS =
 EOT
 
 apt-get update
+
+if [ ! -z "$GITLAB_VER_REGEX" ]; then
+    export GITLAB_VER_STRING=$(apt-cache madison gitlab-ce | grep "$GITLAB_VER_REGEX" | awk 'BEGIN {FS="|"}; {print $2}' | head -n 1 | tr -d " ")
+    echo "==> GitLab version string selected '$GITLAB_VER_STRING'"
+fi
+
 if [ -z "$GITLAB_VER_STRING" ]; then
     apt-get install -y gitlab-ce
 else
