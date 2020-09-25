@@ -23,12 +23,6 @@ export AWS_REGION=<aws_region>
 terraform init
 ```
 
-* Have Terraform create the Elastic IP allocation first.
-
-```bash
-terraform apply -target aws_eip.gl_public
-```
-
 * Have Terraform create the rest of the infrastructure
 
 ```bash

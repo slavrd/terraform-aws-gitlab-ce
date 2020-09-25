@@ -12,6 +12,11 @@ resource "aws_eip" "gl_public" {
   tags = var.common_tags
 }
 
+resource "aws_eip_association" "gl_public" {
+  network_interface_id = module.gitlab.instance_interface_id
+  allocation_id        = aws_eip.gl_public.id
+}
+
 locals {
   gitlab_hostname = trim(split("://", var.gitlab_url)[1], "/")
 }
